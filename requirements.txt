@@ -1,0 +1,5 @@
+srtm_server
+Flask>=0.10.1
+SRTM.py>=0.2.4
+numpy>=1.9.0
+requests>=2.5.1
