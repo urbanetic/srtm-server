@@ -16,27 +16,27 @@ app = Flask(__name__)
 @cross_origin()
 def create_task():
   print "INCOMING!!!!!!--: " + str(datetime.datetime.now())
-  if not request.args:
-    abort(400)
+  intime = datetime.datetime.now()
   # TODO (gbcowan) check if input is valid
   
-  # TODO (gbcowan) get points properly!! Shouldn't need to parse
-  # halfRange = range(0,len(request.args)/2)
-  # points = [[float(request.args['points[' + str(i) + '][lat]']),
-      # float(request.args['points[' + str(i) + '][lon]'])] for i in halfRange]
+
+
 
   north = float(request.args['north'])
   south = float(request.args['south'])
   east = float(request.args['east'])
   west = float(request.args['west'])
   resolution = float(request.args['resolution'])
-
+  print north
+  print south
+  print east
+  print west
+  print resolution
 
   lon = west
   lat = north
   x_step_size = math.fabs(east-west) / resolution
   y_step_size = math.fabs(north-south) / resolution
-
   points = []
 
   while(lat > south):
@@ -49,17 +49,18 @@ def create_task():
       lon += x_step_size
     points.append(row)
     lat -= y_step_size
-
   elevations = []
   for row in points:
     ele_row = []
     for point in row:
       ele_row.append(elevation_data.get_elevation(point[0], point[1]))
     elevations.append(ele_row)
-  print "THAR SHE BLOWS--: " + str(datetime.datetime.now())
-
-  return jsonify(east= east, west= west, north= north, south= south, resolution= resolution,
-                    points= elevations), 200
+  print "THAR SHE BLOWS, process time: " + str(datetime.datetime.now()-intime)
+  
+  ele_str = "|".join([(",".join(str(i) for i in a)) for a in elevations])
+  return (ele_str), 200
+  # return jsonify(east= east, west= west, north= north, south= south, resolution= resolution,
+  #                   points= elevations), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
