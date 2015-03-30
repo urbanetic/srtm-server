@@ -5,6 +5,7 @@ import numpy as np
 import math
 import datetime
 import os
+import sys
 import logging
 
 
@@ -24,9 +25,6 @@ def create_task():
   print "INCOMING!!!!!!--: " + str(datetime.datetime.now())
   intime = datetime.datetime.now()
   # TODO (gbcowan) check if input is valid
-  
-
-
 
   north = float(request.args['north'])
   south = float(request.args['south'])
