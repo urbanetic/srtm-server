@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask.ext.cors import cross_origin
 import srtm
 import numpy as np
