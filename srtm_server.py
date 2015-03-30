@@ -5,10 +5,13 @@ import numpy as np
 import math
 import datetime
 import os
+import logging
+
 
 elevation_data = srtm.get_data()
 app = Flask(__name__)
-
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 @app.route('/', methods=['GET'])
 @cross_origin()
