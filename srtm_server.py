@@ -3,11 +3,8 @@ from flask.ext.cors import cross_origin
 import srtm
 import numpy as np
 import math
-import logging
 import datetime
 
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
 
 elevation_data = srtm.get_data()
 app = Flask(__name__)
@@ -31,7 +28,7 @@ def create_task():
   north = float(request.args['north'])
   south = float(request.args['south'])
   east = float(request.args['east'])
-  west = float(request.args['west'])
+  west = fl`at(request.args['west'])
   resolution = float(request.args['resolution'])
   print north
   print south
