@@ -11,11 +11,12 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
-def create_task():
+@cross_origin()
+def helloworld():
   return "HELLO WORLD!", 200
 
 @app.route('/api/getElevations', methods=['GET'])
-# @cross_origin()
+@cross_origin()
 def create_task():
   print "INCOMING!!!!!!--: " + str(datetime.datetime.now())
   intime = datetime.datetime.now()
