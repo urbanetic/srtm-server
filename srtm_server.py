@@ -4,7 +4,7 @@ import srtm
 import numpy as np
 import math
 import datetime
-
+import os
 
 elevation_data = srtm.get_data()
 app = Flask(__name__)
@@ -64,4 +64,5 @@ def create_task():
 #   return (ele_str), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=33507)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
