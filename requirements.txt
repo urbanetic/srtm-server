@@ -1,4 +1,3 @@
-srtm_server
 Flask>=0.10.1
 Flask-Cors>=1.10.2
 SRTM.py>=0.2.4
