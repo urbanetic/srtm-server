@@ -28,7 +28,7 @@ def create_task():
   north = float(request.args['north'])
   south = float(request.args['south'])
   east = float(request.args['east'])
-  west = fl`at(request.args['west'])
+  west = float(request.args['west'])
   resolution = float(request.args['resolution'])
   print north
   print south
