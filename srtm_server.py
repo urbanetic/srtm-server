@@ -12,6 +12,12 @@ log.setLevel(logging.ERROR)
 elevation_data = srtm.get_data()
 app = Flask(__name__)
 
+
+@app.route('/', methods=['GET'])
+@cross_origin()
+def create_task():
+  return "HELLO WORLD!", 200
+
 @app.route('/api/getElevations', methods=['GET'])
 @cross_origin()
 def create_task():
@@ -63,4 +69,4 @@ def create_task():
   #                   points= elevations), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=33507)
