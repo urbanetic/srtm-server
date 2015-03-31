@@ -55,7 +55,7 @@ https://shielded-ridge-5272.herokuapp.com/api/getElevations?north=-37.7&south=-3
 
 #### Return type
 
-Data returns a string sepearated by ```|``` each substring (between ```|```) represents a horizontal row of heights, from West to East. Rows are ordered from North to South.
+Request returns a string sepearated by ```|``` each substring (between ```|```) represents a horizontal row of heights, from West to East. Rows are ordered from North to South.
 
 Heights are seperated by commas.
 
