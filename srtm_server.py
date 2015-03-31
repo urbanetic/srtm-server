@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, url_for
 from flask.ext.cors import cross_origin
 import srtm
 import numpy as np
@@ -10,11 +10,15 @@ import logging
 
 
 elevation_data = srtm.get_data()
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='')
+
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
-url_for('crossdomain.xml', filename='crossdomain.xml')
+# @app.route('/crossdomain.xml', methods=['GET'])
+# @cross_origin()
+# def crossdomain():
+#   url_for('static', filename='crossdomain.xml')
 
 @app.route('/', methods=['GET'])
 @cross_origin()
