@@ -14,6 +14,8 @@ app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
+url_for('crossdomain.xml', filename='crossdomain.xml')
+
 @app.route('/', methods=['GET'])
 @cross_origin()
 def helloworld():
