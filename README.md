@@ -53,6 +53,8 @@ E.g.
 https://shielded-ridge-5272.herokuapp.com/api/getElevations?north=-37.7&south=-38&east=145.2&west=144.9&resolution=512
 
 
+#### Return type
+
 Data returns a string sepearated by ```|``` each substring (between ```|```) represents a horizontal row of heights.
 
 Heights are seperated by commas.
