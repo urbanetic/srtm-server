@@ -15,11 +15,6 @@ app = Flask(__name__, static_folder='static', static_url_path='')
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
-# @app.route('/crossdomain.xml', methods=['GET'])
-# @cross_origin()
-# def crossdomain():
-#   url_for('static', filename='crossdomain.xml')
-
 @app.route('/', methods=['GET'])
 @cross_origin()
 def helloworld():
@@ -28,20 +23,14 @@ def helloworld():
 @app.route('/api/getElevations', methods=['GET'])
 @cross_origin()
 def create_task():
-  print "INCOMING!!!!!!--: " + str(datetime.datetime.now())
+  print "Request received at: " + str(datetime.datetime.now())
   intime = datetime.datetime.now()
-  # TODO (gbcowan) check if input is valid
 
   north = float(request.args['north'])
   south = float(request.args['south'])
   east = float(request.args['east'])
   west = float(request.args['west'])
   resolution = float(request.args['resolution'])
-  print north
-  print south
-  print east
-  print west
-  print resolution
 
   lon = west
   lat = north
@@ -49,6 +38,7 @@ def create_task():
   y_step_size = math.fabs(north-south) / resolution
   points = []
 
+  # Get lat/lon grid
   while(lat > south):
     if (lat <= -90): lat += 180
     lon = west
@@ -59,15 +49,20 @@ def create_task():
       lon += x_step_size
     points.append(row)
     lat -= y_step_size
+  
+  # Get elevations
   elevations = []
   for row in points:
     ele_row = []
     for point in row:
       ele_row.append(elevation_data.get_elevation(point[0], point[1]))
     elevations.append(ele_row)
-  print "THAR SHE BLOWS, process time: " + str(datetime.datetime.now()-intime)
-  
+
+  #Format as return string  
   ele_str = "|".join([(",".join(str(i) for i in a)) for a in elevations])
+  
+  print "Request processed. Time elapsed: " + str(datetime.datetime.now()-intime)
+  
   return (ele_str), 200
 
 if __name__ == '__main__':
