@@ -1,6 +1,6 @@
 # SRTM Server
 
-A Flask based python REST API for the srtm module to get elevations for a list of lat/lon points.
+A Flask based python REST API for the srtm module to get elevations for an area described by a lat/lon bounding box.
 
 ### To run:
 
@@ -46,7 +46,7 @@ Browser should open displaying ```"Hello World!"```
 
 Form a URL as follows:
 
-    ROOT_URL/api/getElevations?north=TOP_LAT&south=BOTTOM_LAT&east=RIGHT_LON&west=LEFT_LON&resolution=RES
+    APP_URL/api/getElevations?north=TOP_LAT&south=BOTTOM_LAT&east=RIGHT_LON&west=LEFT_LON&resolution=RES
 
 E.g.
 
@@ -55,7 +55,7 @@ https://shielded-ridge-5272.herokuapp.com/api/getElevations?north=-37.7&south=-3
 
 #### Return type
 
-Request returns a string sepearated by ```|``` each substring (between ```|```) represents a horizontal row of heights, from West to East. Rows are ordered from North to South.
+Request returns a string sepearated by ```|``` where each substring (between ```|```) represents a horizontal row of heights, from West to East. Rows are ordered from North to South.
 
 Heights are seperated by commas.
 
