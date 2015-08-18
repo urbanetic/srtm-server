@@ -69,7 +69,7 @@ def generate_image(north, south, east, west, resolution):
     elevations.append(ele_row)
 
   path = generate_path(north, south, east, west, resolution)
-  img = png.from_array(elevations, 'L').save(path)
+  img = png.from_array(elevations, 'L', info={'bitdepth':16}).save(path)
   return path
 
 def generate_path(north, south, east, west, resolution):
