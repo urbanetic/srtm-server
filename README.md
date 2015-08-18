@@ -55,8 +55,4 @@ https://shielded-ridge-5272.herokuapp.com/api/getElevations?north=-37.7&south=-3
 
 #### Return type
 
-Request returns a string sepearated by ```|``` where each substring (between ```|```) represents a horizontal row of heights, from West to East. Rows are ordered from North to South.
-
-Heights are seperated by commas.
-
-Heights are in metres above sea level. 
+A greyscale png image height map of the area specified is returned. Each pixels value represents height above sea level in meters.
