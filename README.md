@@ -56,7 +56,7 @@ https://shielded-ridge-5272.herokuapp.com/api/getElevations?north=-37.7&south=-3
 or 
 
 
-localhost:5000/api/getElevations?north=-37.7&south=-38&east=145.2&west=144.9&resolution=512
+http://localhost:5000/api/getElevations?north=-37.7&south=-38&east=145.2&west=144.9&resolution=512
 
 
 #### Return type
