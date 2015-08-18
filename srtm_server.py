@@ -55,8 +55,12 @@ def generate_image(north, south, east, west, resolution):
       if (lon >= 180): lon -=360
       row.append([lat, lon])
       lon += x_step_size
+    while len(row) > resolution:
+      del row[-1]
     points.append(row)
     lat -= y_step_size
+  while len(points) > resolution:
+    del points[-1]
   
   # Get elevations
   elevations = []
