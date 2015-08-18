@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for
+from flask import Flask, request, url_for, send_file
 from flask.ext.cors import cross_origin
 import srtm
 import numpy as np
@@ -7,7 +7,8 @@ import datetime
 import os
 import sys
 import logging
-
+import png
+import os.path
 
 elevation_data = srtm.get_data()
 app = Flask(__name__, static_folder='static', static_url_path='')
@@ -25,13 +26,20 @@ def helloworld():
 def create_task():
   print "Request received at: " + str(datetime.datetime.now())
   intime = datetime.datetime.now()
-
+  
   north = float(request.args['north'])
   south = float(request.args['south'])
   east = float(request.args['east'])
   west = float(request.args['west'])
   resolution = float(request.args['resolution'])
 
+  path = generate_path(north, south, east, west, resolution)
+  if not os.path.isfile(path):
+    generate_image(north, south, east, west, resolution)
+  print "Request processed. Time elapsed: " + str(datetime.datetime.now()-intime)
+  return send_file(path, mimetype='image/png')
+
+def generate_image(north, south, east, west, resolution):
   lon = west
   lat = north
   x_step_size = math.fabs(east-west) / resolution
@@ -55,15 +63,17 @@ def create_task():
   for row in points:
     ele_row = []
     for point in row:
-      ele_row.append(elevation_data.get_elevation(point[0], point[1]))
+      height = elevation_data.get_elevation(point[0], point[1])
+      if height is None: height = 0
+      ele_row.append(height)
     elevations.append(ele_row)
 
-  #Format as return string  
-  ele_str = "|".join([(",".join(str(i) for i in a)) for a in elevations])
-  
-  print "Request processed. Time elapsed: " + str(datetime.datetime.now()-intime)
-  
-  return (ele_str), 200
+  path = generate_path(north, south, east, west, resolution)
+  img = png.from_array(elevations, 'L').save(path)
+  return path
+
+def generate_path(north, south, east, west, resolution):
+  return "cache/" + str(north) + "_" + str(east) + "_" + str(south) + "_" + str(west) + "_" + str(resolution) + ".png"
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
