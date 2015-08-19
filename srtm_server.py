@@ -69,12 +69,18 @@ def generate_image(north, south, east, west, resolution):
     for point in row:
       height = elevation_data.get_elevation(point[0], point[1])
       if height is None: height = 0
-      ele_row.append(height)
+      ele_row.append(generate_height_color(height))
     elevations.append(ele_row)
 
   path = generate_path(north, south, east, west, resolution)
-  img = png.from_array(elevations, 'L', info={'bitdepth':16}).save(path)
+  img = png.from_array(elevations, 'RGB').save(path)
   return path
+
+def generate_height_color(height):
+  r = int(height/255)
+  g = int(height%255)
+  b = int(100*height%1)
+  return [r, g, b]
 
 def generate_path(north, south, east, west, resolution):
   return "cache/" + str(north) + "_" + str(east) + "_" + str(south) + "_" + str(west) + "_" + str(resolution) + ".png"
