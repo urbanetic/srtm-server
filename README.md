@@ -26,7 +26,7 @@ Just on Windows:
     venv\Scripts\activate.bat
 
 
-Just on *NIX:  
+Just on *NIX:
 
 ```source venv/bin/activate```
 
@@ -53,7 +53,7 @@ E.g.
 https://shielded-ridge-5272.herokuapp.com/api/getElevations?north=-37.7&south=-38&east=145.2&west=144.9&resolution=256
 
 
-or 
+or
 
 
 <localhost:5000/api/getElevations?north=-37.7&south=-38&east=145.2&west=144.9&resolution=256>
@@ -61,9 +61,11 @@ or
 
 #### Return type
 
-A greyscale png image height map of the area specified is returned. Each pixels value represents height above sea level in meters.
+An 8 bit RBG png image height map of the area specified is returned. Each pixels value represents height above sea level in meters encoded as follows;
+
+Height(m) = R*255 + G + B*100
 
 
-E,g, 
+E.g.
 
-![Example output image.](http://i.imgur.com/0PQI9M8.png "Example output.")
+![Example output image.](http://i.imgur.com/FQZ8nKf.png "Example output.")
