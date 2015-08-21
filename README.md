@@ -63,7 +63,7 @@ or
 
 An 8 bit RBG png image height map of the area specified is returned. Each pixels value represents height above sea level in meters encoded as follows;
 
-Height(m) = R*255 + G + B*100
+Height(m) = R\*255 + G + B\*100
 
 
 E.g.
