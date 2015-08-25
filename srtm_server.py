@@ -1,7 +1,6 @@
 from flask import Flask, request, url_for, send_file
 from flask.ext.cors import cross_origin
 import srtm
-import numpy as np
 import math
 import datetime
 import os
@@ -19,19 +18,23 @@ app.logger.setLevel(logging.ERROR)
 @app.route('/', methods=['GET'])
 @cross_origin()
 def helloworld():
-  return "HELLO WORLD!", 200
+  return "SRTM-server is up and running. See readme for usage instructions.", 200
 
 @app.route('/api/getElevations', methods=['GET'])
 @cross_origin()
 def create_task():
   print "Request received at: " + str(datetime.datetime.now())
   intime = datetime.datetime.now()
-  
+
   north = float(request.args['north'])
   south = float(request.args['south'])
   east = float(request.args['east'])
   west = float(request.args['west'])
   resolution = float(request.args['resolution'])
+  # try: ignore_cache = bool(request.args['ignore_cache'])
+  # except e: ignore_cache = False
+  # try: ignore_cache = bool(request.args['clean_data'])
+  # except e: clean_data = False
 
   path = generate_path(north, south, east, west, resolution)
   if not os.path.isfile(path):
@@ -61,7 +64,7 @@ def generate_image(north, south, east, west, resolution):
     lat -= y_step_size
   while len(points) > resolution:
     del points[-1]
-  
+
   # Get elevations
   elevations = []
   for row in points:
