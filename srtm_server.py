@@ -8,6 +8,7 @@ import sys
 import logging
 import png
 import os.path
+from itertools import product, starmap, islice
 
 elevation_data = srtm.get_data()
 app = Flask(__name__, static_folder='static', static_url_path='')
@@ -71,13 +72,34 @@ def generate_image(north, south, east, west, resolution):
     ele_row = []
     for point in row:
       height = elevation_data.get_elevation(point[0], point[1])
-      if height is None: height = 0
-      ele_row.append(generate_height_color(height))
+      ele_row.append(height)
     elevations.append(ele_row)
 
+  elevations = [map(generate_height_color, h) for h in fill_holes(elevations)]
   path = generate_path(north, south, east, west, resolution)
   img = png.from_array(elevations, 'RGB').save(path)
   return path
+
+def fill_holes(matrix):
+  for i, row in enumerate(matrix):
+    for j, val in enumerate(row):
+      if val is None:
+        matrix[i][j] = average(find_neighbors(matrix,i,j))
+  return matrix
+
+def average(array):
+  count = 0
+  total = 0
+  for i in array:
+    if i is not None:
+      count += 1
+      total += i
+  return total/(count or 1)
+
+def find_neighbors(grid, x, y):
+    xi = (0, -1, 1) if 0 < x < len(grid) - 1 else ((0, -1) if x > 0 else (0, 1))
+    yi = (0, -1, 1) if 0 < y < len(grid[0]) - 1 else ((0, -1) if y > 0 else (0, 1))
+    return list(islice(starmap((lambda a, b: grid[x + a][y + b]), product(xi, yi)), 1, None))
 
 def generate_height_color(height):
   r = int(height/255)
