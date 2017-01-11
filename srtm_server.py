@@ -1,5 +1,5 @@
 from flask import Flask, request, url_for, send_file
-from flask.ext.cors import cross_origin
+from flask_cors import cross_origin
 import srtm
 import math
 import datetime
