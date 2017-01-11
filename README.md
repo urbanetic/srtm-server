@@ -69,3 +69,30 @@ Height(m) = R\*255 + G + B\*100
 E.g.
 
 ![Example output image.](http://i.imgur.com/FQZ8nKf.png "Example output.")
+
+
+#### Get elevation from one coordinate pair
+
+Form a URL as follows:
+
+    APP_URL/api/getElevation?lat=LAT&lon=LON
+
+E.g.
+
+http://localhost:5000/api/getElevation?lat=43.6168&lon=6.95063
+ 79
+
+#### Get country code from one coordinate pair
+
+Form a URL as follows:
+
+    APP_URL/api/getCountry?lat=LAT&lon=LON
+
+E.g.
+
+http://localhost:5000/api/getCountry?lat=43.6168&lon=6.95063
+ FR
+
+### Licence
+
+The data file `polygons.properties` is available under a [Creative Commons Attribution-Share Alike License](http://creativecommons.org/licenses/by-sa/3.0/) in accordance with the license from https://github.com/bencampion/reverse-country-code. It was copied and fixed from [daveross/offline-country-reverse-geocoder](https://github.com/daveross/offline-country-reverse-geocoder)
