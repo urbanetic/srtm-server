@@ -9,17 +9,30 @@ import logging
 import png
 import os.path
 from itertools import product, starmap, islice
+from country_poligons import CountryPoligons
 
 elevation_data = srtm.get_data()
+country_data = CountryPoligons()
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
+
 @app.route('/', methods=['GET'])
 @cross_origin()
 def helloworld():
   return "SRTM-server is up and running. See readme for usage instructions.", 200
+
+@app.route('/api/getCountry', methods=['GET'])
+@cross_origin()
+def get_country():
+  print "Request received at: " + str(datetime.datetime.now())
+  intime = datetime.datetime.now()
+
+  lat = float(request.args['lat'])
+  lon = float(request.args['lon'])
+  return country_data.get_country(lat, lon)
 
 @app.route('/api/getElevation', methods=['GET'])
 @cross_origin()
