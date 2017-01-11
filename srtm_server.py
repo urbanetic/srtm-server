@@ -21,6 +21,17 @@ app.logger.setLevel(logging.ERROR)
 def helloworld():
   return "SRTM-server is up and running. See readme for usage instructions.", 200
 
+@app.route('/api/getElevation', methods=['GET'])
+@cross_origin()
+def get_elevation():
+  print "Request received at: " + str(datetime.datetime.now())
+  intime = datetime.datetime.now()
+
+  lat = float(request.args['lat'])
+  lon = float(request.args['lon'])
+  height = elevation_data.get_elevation(lat, lon)
+  return str(height)
+
 @app.route('/api/getElevations', methods=['GET'])
 @cross_origin()
 def create_task():
